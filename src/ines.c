@@ -323,27 +323,21 @@ static void CheckHInfo(void) {
 					iNESCart.region = moo[x].region;
 				}
 			}
-			switch (moo[x].mapper) {
-				/* TODO: Eventually, all items from overrides should be considered as ines 2.0 compatible */
-				case   1:
-				case   5:
-				case 176:
-					if (moo[x].prgram >= 0) {
-						tofix |= 32;
-						iNESCart.iNES2 = 1;
-						iNESCart.PRGRamSize = (moo[x].prgram & 0x0F) ? (64 << ((moo[x].prgram >> 0) & 0xF)) : 0;
-						iNESCart.PRGRamSaveSize = (moo[x].prgram & 0xF0) ? (64 << ((moo[x].prgram >> 4) & 0xF)) : 0;
-					}
-					if (moo[x].chrram >= 0) {
-						tofix |= 32;
-						iNESCart.iNES2 = 1;
-						iNESCart.CHRRamSize = (moo[x].chrram & 0x0F) ? (64 << ((moo[x].chrram >> 0) & 0xF)) : 0;
-						iNESCart.CHRRamSaveSize = (moo[x].chrram & 0xF0) ? (64 << ((moo[x].chrram >> 4) & 0xF)) : 0;
-					}
-					break;
-				default:
-					break;
+
+			if (moo[x].prgram >= 0) {
+				tofix |= 32;
+				iNESCart.iNES2 = 1;
+				iNESCart.PRGRamSize = (moo[x].prgram & 0x0F) ? (64 << ((moo[x].prgram >> 0) & 0xF)) : 0;
+				iNESCart.PRGRamSaveSize = (moo[x].prgram & 0xF0) ? (64 << ((moo[x].prgram >> 4) & 0xF)) : 0;
 			}
+
+			if (moo[x].chrram >= 0) {
+				tofix |= 32;
+				iNESCart.iNES2 = 1;
+				iNESCart.CHRRamSize = (moo[x].chrram & 0x0F) ? (64 << ((moo[x].chrram >> 0) & 0xF)) : 0;
+				iNESCart.CHRRamSaveSize = (moo[x].chrram & 0xF0) ? (64 << ((moo[x].chrram >> 4) & 0xF)) : 0;
+			}
+
 			break;
 		}
 		x++;
@@ -392,7 +386,6 @@ static void CheckHInfo(void) {
 			}
 		}
 		strcat(gigastr, "\n");
-		FCEU_printf("\n", gigastr);
 		FCEU_printf("%s\n", gigastr);
 	}
 
@@ -694,6 +687,7 @@ INES_BOARD_BEGIN()
 	INES_BOARD( "Bitcorp 31-in-1",          360, Mapper360_Init         )
 	INES_BOARD( "OK-411",                   361, GN45_Init              ) /* OK-411 is emulated together with GN-45 */
 	INES_BOARD( "GN-45",                    366, GN45_Init              )
+	INES_BOARD( "Golden Mario Party II - Around the World 6-in-1",       370, Mapper370_Init         )
 	INES_BOARD( "MMC3 PIRATE SFC-12",       372, Mapper372_Init         )
 	INES_BOARD( "95/96 Super HiK 4-in-1",   374, Mapper374_Init         )
 	INES_BOARD( "42 to 80,000 (970630C)",   380, Mapper380_Init         )
@@ -701,6 +695,9 @@ INES_BOARD_BEGIN()
 	INES_BOARD( "830928C",                  382, Mapper382_Init         )
 	INES_BOARD( "Caltron 9-in-1",           389, Mapper389_Init         )
 	INES_BOARD( "Realtec 8031",             390, Mapper390_Init         )
+	INES_BOARD( "NewStar 12-in-1/7-in-1",   293, Mapper293_Init         )
+	INES_BOARD( "Realtec 8210",             395, Mapper395_Init         )
+	INES_BOARD( "BMC Super 19-in-1 (VIP19)",    401, Mapper401_Init         )
 	INES_BOARD( "A88S-1",                   411, Mapper411_Init         )
 	INES_BOARD( "Brilliant Com Cocoma Pack", 516, Mapper516_Init        )
 	INES_BOARD( "Sachen 3014",              533, Mapper533_Init         )
